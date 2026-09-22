@@ -38,14 +38,14 @@ const localDatabase = {
     "PH-CJM": {
         type: "Cessna Citation Sovereign",
         model: "C680",
-        owner: "ASL Group",
+        owner: "Frits van Eerd - Jumbo",
         icao: "4846F0",
         status: "Business Jet"
     },
     "PH-AJX": {
         type: "Dassault Falcon 7X",
         model: "Falcon 7X",
-        owner: "Exxaero / Verwelius",
+        owner: "AJAX (Exxaero)",
         icao: "485170",
         status: "Business Jet"
     },
