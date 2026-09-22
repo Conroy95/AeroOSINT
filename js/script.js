@@ -1,4 +1,4 @@
-// Lokale database voor snelle/bekende targets (je kunt hier zelf items aan toevoegen)
+// Lokale database met alle toegevoegde privéjets, helikopters en politievliegtuigen
 const localDatabase = {
     "PH-RAC": {
         type: "Cessna 172 Skyhawk",
@@ -15,18 +15,116 @@ const localDatabase = {
         status: "Commercieel Vliegtuig"
     },
     "PH-UTL": {
-        type: "Dassault",
+        type: "Dassault Falcon 8X",
         model: "Falcon 8X",
         owner: "Max Verstappen",
         icao: "4867E6",
-        status: "Active"
+        status: "Actief"
     },
     "PH-TLP": {
-        type: "Dassault",
+        type: "Dassault Falcon 7X",
         model: "Falcon 7X",
         owner: "Talpa / John de Mol",
         icao: "485171",
-        status: "Active"
+        status: "Actief"
+    },
+    "PH-KFY": {
+        type: "Diamond DA-40NG Star",
+        model: "DA40",
+        owner: "KLM Flight Academy",
+        icao: "485993",
+        status: "Lesvliegtuig / Actief"
+    },
+    "PH-CJM": {
+        type: "Cessna Citation Sovereign",
+        model: "C680",
+        owner: "ASL Group",
+        icao: "4846F0",
+        status: "Business Jet"
+    },
+    "PH-AJX": {
+        type: "Dassault Falcon 7X",
+        model: "Falcon 7X",
+        owner: "Exxaero / Verwelius",
+        icao: "485170",
+        status: "Business Jet"
+    },
+    "OO-NHV": {
+        type: "Airbus / Eurocopter Dauphin",
+        model: "AS365",
+        owner: "Noordzee Helikopters Vlaanderen (NHV)",
+        icao: "448A42",
+        status: "Helikopter / Offshore"
+    },
+    "PH-IWS": {
+        type: "Dassault Falcon 7X",
+        model: "Falcon 7X",
+        owner: "Martin Garrix (Exxaero)",
+        icao: "4851B8",
+        status: "Business Jet"
+    },
+    "PH-BEJ": {
+        type: "Bombardier Global 5000",
+        model: "BD-700",
+        owner: "Ben Mandemakers (FlyingGroup)",
+        icao: "485FD1",
+        status: "Business Jet"
+    },
+    "N900KS": {
+        type: "Gulfstream G650ER",
+        model: "GV-SP",
+        owner: "Steven Spielberg",
+        icao: "AC701E",
+        status: "Private Jet (USA)"
+    },
+    "N887WM": {
+        type: "Gulfstream G650ER",
+        model: "GV-SP",
+        owner: "Bill Gates",
+        icao: "AC8C34",
+        status: "Private Jet (USA)"
+    },
+    "PH-PXA": {
+        type: "Piaggio P.180 Avanti",
+        model: "P180",
+        owner: "Nationale Politie (Police01)",
+        icao: "48401A",
+        status: "Overheid / Politie"
+    },
+    "PH-PXB": {
+        type: "Cessna 172 / Overig",
+        model: "C172",
+        owner: "Nationale Politie (Police02)",
+        icao: "48401B",
+        status: "Overheid / Politie"
+    },
+    "PH-PXC": {
+        type: "Patrouillevliegtuig",
+        model: "Surveillance",
+        owner: "Nationale Politie (Police03)",
+        icao: "48401C",
+        status: "Overheid / Politie"
+    },
+    "PH-PXX": {
+        type: "Surveillance Vliegtuig",
+        model: "Custom",
+        owner: "Nationale Politie (Police04)",
+        icao: "48401D",
+        status: "Overheid / Politie"
+    },
+    "PH-PXD": {
+        type: "Surveillance Vliegtuig",
+        model: "Custom",
+        owner: "Nationale Politie (Police04)",
+        icao: "48401E",
+        status: "Overheid / Politie"
+    },
+    "PH-PXZ": {
+        type: "Politie Helikopter / Vliegtuig",
+        model: "Air Support",
+        owner: "Nationale Politie (Police26)",
+        icao: "48401F",
+        status: "Overheid / Politie"
     }
 };
 
@@ -45,7 +143,6 @@ async function performSearch() {
 
     if (!query) return;
 
-    // Reset schermen
     resultCard.classList.add('hidden');
     errorCard.classList.add('hidden');
     loading.classList.remove('hidden');
@@ -79,9 +176,9 @@ async function performSearch() {
             }
         } catch (err) {
             errorCard.classList.remove('hidden');
-            document.getElementById('errorText').innerText = `Fout bij opzoeken. Controleer de netwerkverbinding.`;
+            document.getElementById('errorText').innerText = `Fout bij opzoeken of geen netwerkverbinding.`;
         }
-    }, 500);
+    }, 400);
 }
 
 async function displayResult(reg, data) {
@@ -92,21 +189,19 @@ async function displayResult(reg, data) {
     document.getElementById('resIcao').innerText = data.icao;
     document.getElementById('resStatus').innerText = data.status;
 
-    // Afbeelding ophalen via Planespotters API
     const imgElement = document.getElementById('resImage');
-    imgElement.classList.add('hidden'); // Verberg tijdelijk tijdens laden
+    imgElement.classList.add('hidden');
 
     try {
         const photoResponse = await fetch(`https://api.planespotters.net/pub/photos/reg/${reg}`);
         const photoData = await photoResponse.json();
 
         if (photoData && photoData.photos && photoData.photos.length > 0) {
-            // Neem de URL van de eerste beschikbare foto
             imgElement.src = photoData.photos[0].thumbnail_large.src;
             imgElement.classList.remove('hidden');
         }
     } catch (e) {
-        // Als er geen foto gevonden kan worden, blijft het element onzichtbaar
+        // Geen foto beschikbaar
     }
 
     document.getElementById('resultCard').classList.remove('hidden');
