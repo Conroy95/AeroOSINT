@@ -1,0 +1,85 @@
+// Lokale database voor snelle/bekende OSINT targets (kun je zelf makkelijk uitbreiden!)
+const localDatabase = {
+    "PH-RAC": {
+        type: "Cessna 172 Skyhawk",
+        model: "C172",
+        owner: "Privé / Aeroclub",
+        icao: "4844CD",
+        status: "Geregistreerd / Actief"
+    },
+    "PH-BVA": {
+        type: "Boeing 737-8K2",
+        model: "B738",
+        owner: "KLM - Royal Dutch Airlines",
+        icao: "484123",
+        status: "Commercieel Vliegtuig"
+    }
+};
+
+document.getElementById('searchBtn').addEventListener('click', performSearch);
+document.getElementById('searchInput').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        performSearch();
+    }
+});
+
+async function performSearch() {
+    const query = document.getElementById('searchInput').value.trim().toUpperCase();
+    const resultCard = document.getElementById('resultCard');
+    const errorCard = document.getElementById('errorCard');
+    const loading = document.getElementById('loading');
+
+    if (!query) return;
+
+    // Reset schermen
+    resultCard.classList.add('hidden');
+    errorCard.classList.add('hidden');
+    loading.classList.remove('hidden');
+
+    // Simuleer een korte OSINT scan-tijd voor het effect
+    setTimeout(async () => {
+        loading.classList.add('hidden');
+
+        // 1. Controleer eerst of de registratie in je eigen handige lokale database staat
+        if (localDatabase[query]) {
+            displayResult(query, localDatabase[query]);
+            return;
+        }
+
+        // 2. Zo niet, probeer live op te vragen via openbare bronnen (adsb.lol API als voorbeeld)
+        try {
+            const response = await fetch(`https://api.adsb.lol/v2/reg/${query}`);
+            const data = await response.json();
+
+            if (data && data.ac && data.ac.length > 0) {
+                const plane = data.ac[0];
+                displayResult(query, {
+                    type: plane.type || "Onbekend type",
+                    model: plane.desc || "Standaard luchtvaartuig",
+                    owner: plane.ownOp || "Onbekende exploitant",
+                    icao: plane.hex || "N.v.t.",
+                    status: "Gedownload via Live Transponder Netwerk"
+                });
+            } else {
+                // Geen resultaat gevonden ergens
+                errorCard.classList.remove('hidden');
+                document.getElementById('errorText').innerText = `Geen actieve data gevonden voor registratie: ${query}`;
+            }
+        } catch (err) {
+            // Fout bij ophalen (bijv. geen internet of CORS blokkade)
+            errorCard.classList.remove('hidden');
+            document.getElementById('errorText').innerText = `Fout bij opzoeken. Controleer je netwerkverbinding.`;
+        }
+    }, 600);
+}
+
+function displayResult(reg, data) {
+    document.getElementById('resReg').innerText = reg;
+    document.getElementById('resType').innerText = data.type;
+    document.getElementById('resModel').innerText = data.model;
+    document.getElementById('resOwner').innerText = data.owner;
+    document.getElementById('resIcao').innerText = data.icao;
+    document.getElementById('resStatus').innerText = data.status;
+
+    document.getElementById('resultCard').classList.remove('hidden');
+}
