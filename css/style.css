@@ -129,6 +129,21 @@ button:hover {
     text-shadow: 0 0 5px var(--neon-glow);
 }
 
+.image-container {
+    width: 100%;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+#resImage {
+    width: 100%;
+    max-height: 220px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid var(--neon-blue);
+    box-shadow: 0 0 10px var(--neon-glow);
+}
+
 .info-row {
     display: flex;
     justify-content: space-between;
@@ -163,7 +178,6 @@ button:hover {
     text-align: center;
 }
 
-/* Loader animatie */
 #loading {
     text-align: center;
     padding: 20px;
