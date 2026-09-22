@@ -132,6 +132,13 @@ const localDatabase = {
         owner: "ANWB Medical Air Assistance BV",
         icao: "486A31",
         status: "Active"
+    },
+    "PH-KTM": {
+        type: "Robinson",
+        model: "R44 Raven II",
+        owner: "Eric Richter Heliservice B.V.",
+        icao: "Unknown",
+        status: "Active"
     }
 };
 
