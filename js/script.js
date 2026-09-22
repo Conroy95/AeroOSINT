@@ -1,4 +1,4 @@
-// Lokale database voor snelle/bekende OSINT targets (kun je zelf makkelijk uitbreiden!)
+// Lokale database voor snelle/bekende targets (je kunt hier zelf items aan toevoegen)
 const localDatabase = {
     "PH-RAC": {
         type: "Cessna 172 Skyhawk",
@@ -36,17 +36,16 @@ async function performSearch() {
     errorCard.classList.add('hidden');
     loading.classList.remove('hidden');
 
-    // Simuleer een korte OSINT scan-tijd voor het effect
     setTimeout(async () => {
         loading.classList.add('hidden');
 
-        // 1. Controleer eerst of de registratie in je eigen handige lokale database staat
+        // 1. Controleer lokale database
         if (localDatabase[query]) {
             displayResult(query, localDatabase[query]);
             return;
         }
 
-        // 2. Zo niet, probeer live op te vragen via openbare bronnen (adsb.lol API als voorbeeld)
+        // 2. Zoek via live openbare API (adsb.lol)
         try {
             const response = await fetch(`https://api.adsb.lol/v2/reg/${query}`);
             const data = await response.json();
@@ -58,28 +57,43 @@ async function performSearch() {
                     model: plane.desc || "Standaard luchtvaartuig",
                     owner: plane.ownOp || "Onbekende exploitant",
                     icao: plane.hex || "N.v.t.",
-                    status: "Gedownload via Live Transponder Netwerk"
+                    status: "Actief transponder signaal"
                 });
             } else {
-                // Geen resultaat gevonden ergens
                 errorCard.classList.remove('hidden');
-                document.getElementById('errorText').innerText = `Geen actieve data gevonden voor registratie: ${query}`;
+                document.getElementById('errorText').innerText = `Geen gegevens gevonden voor registratie: ${query}`;
             }
         } catch (err) {
-            // Fout bij ophalen (bijv. geen internet of CORS blokkade)
             errorCard.classList.remove('hidden');
-            document.getElementById('errorText').innerText = `Fout bij opzoeken. Controleer je netwerkverbinding.`;
+            document.getElementById('errorText').innerText = `Fout bij opzoeken. Controleer de netwerkverbinding.`;
         }
-    }, 600);
+    }, 500);
 }
 
-function displayResult(reg, data) {
+async function displayResult(reg, data) {
     document.getElementById('resReg').innerText = reg;
     document.getElementById('resType').innerText = data.type;
     document.getElementById('resModel').innerText = data.model;
     document.getElementById('resOwner').innerText = data.owner;
     document.getElementById('resIcao').innerText = data.icao;
     document.getElementById('resStatus').innerText = data.status;
+
+    // Afbeelding ophalen via Planespotters API
+    const imgElement = document.getElementById('resImage');
+    imgElement.classList.add('hidden'); // Verberg tijdelijk tijdens laden
+
+    try {
+        const photoResponse = await fetch(`https://api.planespotters.net/pub/photos/reg/${reg}`);
+        const photoData = await photoResponse.json();
+
+        if (photoData && photoData.photos && photoData.photos.length > 0) {
+            // Neem de URL van de eerste beschikbare foto
+            imgElement.src = photoData.photos[0].thumbnail_large.src;
+            imgElement.classList.remove('hidden');
+        }
+    } catch (e) {
+        // Als er geen foto gevonden kan worden, blijft het element onzichtbaar
+    }
 
     document.getElementById('resultCard').classList.remove('hidden');
 }
