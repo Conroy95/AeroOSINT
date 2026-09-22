@@ -13,26 +13,31 @@
     <div class="container">
         <header>
             <h1>OSINT <span class="neon-text">AIRCRAFT LOOKUP</span></h1>
-            <p class="subtitle">// Systeem voor vlucht- en registratie-analytica</p>
+            <p class="subtitle">// Vlucht- en registratie-analytica</p>
         </header>
 
         <main>
             <div class="search-box">
                 <input type="text" id="searchInput" placeholder="Voer registratie in (bijv. PH-RAC, N12345)..." autocomplete="off">
-                <button id="searchBtn">SCAN</button>
+                <button id="searchBtn">ZOEK</button>
             </div>
 
             <div id="loading" class="hidden">
                 <div class="spinner"></div>
-                <p>Gegevens ophalen uit wereldwijde transponder-databases...</p>
+                <p>Gegevens ophalen uit databases...</p>
             </div>
 
             <div id="resultCard" class="card hidden">
                 <div class="card-header">
-                    <h2>Vliegtuig Gevonden</h2>
+                    <h2>Vliegtuig Gegevens</h2>
                     <span id="resReg" class="badge">--</span>
                 </div>
                 <div class="card-body">
+                    <!-- Afbeelding container -->
+                    <div class="image-container">
+                        <img id="resImage" src="" alt="Vliegtuig foto" class="hidden">
+                    </div>
+
                     <div class="info-row">
                         <span class="label">Vliegtuig Type:</span>
                         <span id="resType" class="value">--</span>
@@ -57,12 +62,12 @@
             </div>
 
             <div id="errorCard" class="card error hidden">
-                <p id="errorText">Geen registratie gevonden in de actieve database.</p>
+                <p id="errorText">Geen registratie gevonden in de database.</p>
             </div>
         </main>
 
         <footer>
-            <p>&copy; 2026 OSINT Dashboard - Secure Client</p>
+            <p>&copy; 2026 OSINT Dashboard</p>
         </footer>
     </div>
 
