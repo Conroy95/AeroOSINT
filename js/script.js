@@ -20,6 +20,13 @@ const localDatabase = {
         owner: "Max Verstappen",
         icao: "4867E6",
         status: "Active"
+    },
+    "PH-TLP": {
+        type: "Dassault",
+        model: "Falcon 7X",
+        owner: "Talpa / John de Mol",
+        icao: "485171",
+        status: "Active"
     }
 };
 
