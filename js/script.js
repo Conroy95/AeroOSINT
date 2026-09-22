@@ -125,6 +125,13 @@ const localDatabase = {
         owner: "Nationale Politie (Police26)",
         icao: "48401F",
         status: "Overheid / Politie"
+    },
+    "PH-HIP": {
+        type: "Airbus Helicopters",
+        model: "H135 P3",
+        owner: "ANWB Medical Air Assistance BV",
+        icao: "486A31",
+        status: "Active"
     }
 };
 
