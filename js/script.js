@@ -13,6 +13,13 @@ const localDatabase = {
         owner: "KLM - Royal Dutch Airlines",
         icao: "484123",
         status: "Commercieel Vliegtuig"
+    },
+    "PH-UTL": {
+        type: "Dassault",
+        model: "Falcon 8X",
+        owner: "Max Verstappen",
+        icao: "4867E6",
+        status: "Active"
     }
 };
 
