@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSINT Aircraft Lookup</title>
+    <!-- Favicon link -->
+    <link rel="icon" href="fav/favicon.ico" type="image/x-icon">
+    <!-- CSS stylesheet link -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>OSINT <span class="neon-text">AIRCRAFT LOOKUP</span></h1>
+            <p class="subtitle">// Systeem voor vlucht- en registratie-analytica</p>
+        </header>
+
+        <main>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Voer registratie in (bijv. PH-RAC, N12345)..." autocomplete="off">
+                <button id="searchBtn">SCAN</button>
+            </div>
+
+            <div id="loading" class="hidden">
+                <div class="spinner"></div>
+                <p>Gegevens ophalen uit wereldwijde transponder-databases...</p>
+            </div>
+
+            <div id="resultCard" class="card hidden">
+                <div class="card-header">
+                    <h2>Doelwit Gevonden</h2>
+                    <span id="resReg" class="badge">--</span>
+                </div>
+                <div class="card-body">
+                    <div class="info-row">
+                        <span class="label">Vliegtuig Type:</span>
+                        <span id="resType" class="value">--</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Fabrikant / Model:</span>
+                        <span id="resModel" class="value">--</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Eigenaar / Operator:</span>
+                        <span id="resOwner" class="value">--</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">ICAO Hex Code:</span>
+                        <span id="resIcao" class="value">--</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Status / Positie:</span>
+                        <span id="resStatus" class="value">--</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="errorCard" class="card error hidden">
+                <p id="errorText">Geen registratie gevonden in de actieve database.</p>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 OSINT Dashboard - Secure Client</p>
+        </footer>
+    </div>
+
+    <!-- JS script link -->
+    <script src="js/script.js"></script>
+</body>
+</html>
