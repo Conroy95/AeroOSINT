@@ -146,6 +146,48 @@ const localDatabase = {
         owner: "Khosla Ventures LLC",
         icao: "ABA63F",
         status: "Active"
+    },
+    "PH-RAD": {
+        type: "Diamond",
+        model: "DA40D Diamond Star TDI",
+        owner: "Stichting Vliegmaterieel Rotterdam",
+        icao: "4841B0",
+        status: "Active"
+    },
+    "UR-ABA": {
+        type: "Airbus",
+        model: "A319-115(CJ) ACJ",
+        owner: "Ukrainian Government",
+        icao: "50815F",
+        status: "Active"
+    },
+    "PH-PXF": {
+        type: "Airbus Helicopters",
+        model: "EC135 P2+",
+        owner: "Nationale Politie",
+        icao: "484A96",
+        status: "Active"
+    },
+    "PH-HLP": {
+        type: "Airbus Helicopters",
+        model: "H135 P3",
+        owner: "ANWB Medical Air Assistance",
+        icao: "486A30",
+        status: "Active"
+    },
+    "PH-SAR": {
+        type: "Leonardo",
+        model: "AW189",
+        owner: "Bristow Netherlands",
+        icao: "486449",
+        status: "Active"
+    },
+    "PH-NCG": {
+        type: "Leonardo",
+        model: "AW189",
+        owner: "Bristow Netherlands",
+        icao: "48644B",
+        status: "Active"
     }
 };
 
