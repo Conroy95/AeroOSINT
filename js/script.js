@@ -139,6 +139,13 @@ const localDatabase = {
         owner: "Eric Richter Heliservice B.V.",
         icao: "Unknown",
         status: "Active"
+    },
+    "N85NV": {
+        type: "Gulfstream Aerospace",
+        model: "Gulfstream V (GV)",
+        owner: "Khosla Ventures LLC",
+        icao: "ABA63F",
+        status: "Active"
     }
 };
 
